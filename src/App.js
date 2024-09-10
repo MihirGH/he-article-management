@@ -6,26 +6,50 @@ import { ArticlesList } from './ArticlesList';
 import { ARTICLES } from './data';
 
 const App = () => {
-  // TODO: Handle state updates to the articles list
-  const [articles] = useState(ARTICLES);
+  // Handle state updates to the articles list
+  const [articles, setArticles] = useState(ARTICLES);
+  const [selectedTags, setSelectedTags] = useState([]);
 
-  // TODO: Extract unique tags from articles
-  const uniqueTags = [
-    { tag: 'history', count: 2 },
-    { tag: 'english', count: 2 },
-    { tag: 'french', count: 3 },
-    { tag: 'fiction', count: 1 },
-    { tag: 'mystery', count: 1 },
-    { tag: 'love', count: 1 },
-  ];
+  // Extract unique tags from articles
+  const uniqueTags = articles.reduce((acc, article) => {
+    article.tags.forEach((tag) => {
+      const matchingTag = acc.find((t) => t.tag === tag);
+      if (matchingTag) {
+        matchingTag.count += 1;
+        return;
+      }
+      acc.push({ tag, count: 1 });
+    });
 
-  // TODO: Implement this
-  const handleTagClick = () => {};
+    return acc;
+  }, []);
 
-  // TODO: Implement this
-  const handleTagRemove = () => {};
+  // Maintain a list of selected tags
+  const handleTagClick = (tag) => {
+    if (selectedTags.includes(tag)) {
+      setSelectedTags(selectedTags.filter((t) => t !== tag));
+    } else {
+      setSelectedTags([...selectedTags, tag]);
+    }
+  };
 
-  const filteredArticles = articles;
+  // Update the articles state
+  const handleTagRemove = (articleId, tag) => {
+    const updatedArticles = articles.map((article) => {
+      if (article.id === articleId) {
+        return { ...article, tags: article.tags.filter((t) => t !== tag) };
+      }
+      return article;
+    });
+    setArticles(updatedArticles);
+  };
+
+  const filteredArticles =
+    selectedTags.length > 0
+      ? articles.filter((article) =>
+          selectedTags.every((tag) => article.tags.includes(tag))
+        )
+      : articles;
 
   return (
     <div className="flex flex-col gap-5 mx-auto max-w-2xl p-10">
@@ -33,7 +57,11 @@ const App = () => {
         <span className="uppercase tracking-wide text-md text-indigo-500 font-semibold">
           Tags
         </span>
-        <TagsList tags={uniqueTags} onTagClick={handleTagClick} />
+        <TagsList
+          tags={uniqueTags}
+          selectedTags={selectedTags}
+          onTagClick={handleTagClick}
+        />
       </header>
 
       <main className="flex flex-col gap-2">

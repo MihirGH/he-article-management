@@ -6,10 +6,8 @@ export const TagsList = ({ tags, selectedTags, onTagClick }) => {
       {tags.map(({ tag, count }) => (
         <TagButton
           key={tag}
-          // TODO: Handle this
-          isSelected={false}
-          // TODO: Handle this
-          onClick={onTagClick}
+          isSelected={selectedTags.includes(tag)}
+          onClick={() => onTagClick(tag)}
         >
           {tag} ({count})
         </TagButton>
