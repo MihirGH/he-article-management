@@ -1,6 +1,6 @@
 import { TagButton } from './TagButton';
 
-export const ArticlesList = ({ articles }) => {
+export const ArticlesList = ({ articles, onTagRemove }) => {
   return (
     <div className="flex flex-col gap-3">
       {articles.map((article) => (
@@ -10,7 +10,11 @@ export const ArticlesList = ({ articles }) => {
             <strong>Tags: </strong>
             <div className="flex flex-wrap gap-2">
               {article.tags.map((tag) => (
-                <TagButton key={tag}>
+                <TagButton
+                  key={tag}
+                  disabled={article.tags.length === 1}
+                  onClick={() => onTagRemove(article.id, tag)}
+                >
                   {tag} {'\u2A09'}
                 </TagButton>
               ))}
