@@ -8,16 +8,14 @@ jest.mock('../data', () => ({
 }));
 
 describe('App', () => {
-  it('renders everything correctly', () => {
+  it('1.', () => {
     render(<App />);
 
-    // Tags
     expect(screen.getByText(`React (2)`)).toBeInTheDocument();
     expect(screen.getByText(`JavaScript (2)`)).toBeInTheDocument();
     expect(screen.getByText(`CSS (2)`)).toBeInTheDocument();
     expect(screen.getByText(`HTML (1)`)).toBeInTheDocument();
 
-    // Articles
     expect(screen.getByText('JS and React')).toBeInTheDocument();
     expect(screen.getByText('CSS and JS')).toBeInTheDocument();
     expect(screen.getByText('CSS and React')).toBeInTheDocument();
@@ -25,20 +23,18 @@ describe('App', () => {
   });
 });
 
-describe('Filtering based on individual tags', () => {
-  it('renders correctly after selecting a tag and then deselecting it', () => {
+describe('2.', () => {
+  it('1.', () => {
     render(<App />);
-    fireEvent.click(screen.getByText(`React (2)`)); // Click to select the tag
+    fireEvent.click(screen.getByText(`React (2)`));
 
-    // Articles
     expect(screen.getByText('JS and React')).toBeInTheDocument();
     expect(screen.queryByText('CSS and JS')).not.toBeInTheDocument();
     expect(screen.getByText('CSS and React')).toBeInTheDocument();
     expect(screen.queryByText('HTML')).not.toBeInTheDocument();
 
-    fireEvent.click(screen.getByText(`React (2)`)); // Click to deselect the tag
+    fireEvent.click(screen.getByText(`React (2)`));
 
-    // Articles
     expect(screen.getByText('JS and React')).toBeInTheDocument();
     expect(screen.getByText('CSS and JS')).toBeInTheDocument();
     expect(screen.getByText('CSS and React')).toBeInTheDocument();
@@ -47,17 +43,15 @@ describe('Filtering based on individual tags', () => {
 
   it('2.', () => {
     render(<App />);
-    fireEvent.click(screen.getByText(`HTML (1)`)); // Click to select the tag
+    fireEvent.click(screen.getByText(`HTML (1)`));
 
-    // Articles
     expect(screen.queryByText('JS and React')).not.toBeInTheDocument();
     expect(screen.queryByText('CSS and JS')).not.toBeInTheDocument();
     expect(screen.queryByText('CSS and React')).not.toBeInTheDocument();
     expect(screen.getByText('HTML')).toBeInTheDocument();
 
-    fireEvent.click(screen.getByText(`HTML (1)`)); // Click to deselect the tag
+    fireEvent.click(screen.getByText(`HTML (1)`));
 
-    // Articles
     expect(screen.getByText('JS and React')).toBeInTheDocument();
     expect(screen.getByText('CSS and JS')).toBeInTheDocument();
     expect(screen.getByText('CSS and React')).toBeInTheDocument();
@@ -65,13 +59,12 @@ describe('Filtering based on individual tags', () => {
   });
 });
 
-describe('Filtering based on multiple tags', () => {
-  it('renders correctly after selecting multiple tags and then deselecting some', () => {
+describe('3.', () => {
+  it('1.', () => {
     render(<App />);
-    fireEvent.click(screen.getByText(`CSS (2)`)); // Click to select the tag
-    fireEvent.click(screen.getByText(`HTML (1)`)); // Click to select the tag
+    fireEvent.click(screen.getByText(`CSS (2)`));
+    fireEvent.click(screen.getByText(`HTML (1)`));
 
-    // Articles
     expect(screen.queryByText('JS and React')).not.toBeInTheDocument();
     expect(screen.queryByText('CSS and JS')).not.toBeInTheDocument();
     expect(screen.queryByText('CSS and React')).not.toBeInTheDocument();
@@ -80,18 +73,16 @@ describe('Filtering based on multiple tags', () => {
 
   it('2.', () => {
     render(<App />);
-    fireEvent.click(screen.getByText(`React (2)`)); // Click to select the tag
-    fireEvent.click(screen.getByText(`CSS (2)`)); // Click to select the tag
+    fireEvent.click(screen.getByText(`React (2)`));
+    fireEvent.click(screen.getByText(`CSS (2)`));
 
-    // Articles
     expect(screen.queryByText('JS and React')).not.toBeInTheDocument();
     expect(screen.queryByText('CSS and JS')).not.toBeInTheDocument();
     expect(screen.getByText('CSS and React')).toBeInTheDocument();
     expect(screen.queryByText('HTML')).not.toBeInTheDocument();
 
-    fireEvent.click(screen.getByText(`CSS (2)`)); // Click to deselect the tag
+    fireEvent.click(screen.getByText(`CSS (2)`));
 
-    // Articles
     expect(screen.getByText('JS and React')).toBeInTheDocument();
     expect(screen.queryByText('CSS and JS')).not.toBeInTheDocument();
     expect(screen.getByText('CSS and React')).toBeInTheDocument();
@@ -99,8 +90,8 @@ describe('Filtering based on multiple tags', () => {
   });
 });
 
-describe('Removing tag from the article', () => {
-  it('disables last tag from being removed and updates the count', () => {
+describe('4.', () => {
+  it('1.', () => {
     render(<App />);
 
     expect(screen.getByText(`React (2)`)).toBeInTheDocument();
@@ -109,11 +100,8 @@ describe('Removing tag from the article', () => {
     const tagToRemove = `React \u2A09`;
     const remainingTag = `JavaScript \u2A09`;
 
-    // Click the first React tag
     fireEvent.click(screen.getAllByText(tagToRemove)[0].closest('button'));
 
-    // Removing the last tag i.e., JavaScript on the first article
-    // should not be possible and thus it should be disabled
     expect(
       screen.getAllByText(remainingTag)[0].closest('button')
     ).toBeDisabled();
@@ -131,11 +119,8 @@ describe('Removing tag from the article', () => {
     const tagToRemove = `React \u2A09`;
     const remainingTag = `CSS \u2A09`;
 
-    // Click the first React tag
     fireEvent.click(screen.getAllByText(tagToRemove).at(-1).closest('button'));
 
-    // Removing the last tag i.e., JavaScript on the first article
-    // should not be possible and thus it should be disabled
     expect(
       screen.getAllByText(remainingTag).at(-1).closest('button')
     ).toBeDisabled();

@@ -3,11 +3,10 @@ import '@testing-library/jest-dom';
 
 import App from '../App';
 
-describe('App', () => {
-  it('renders tags correctly', () => {
+describe('1.', () => {
+  it('1.', () => {
     render(<App />);
 
-    // Tags
     expect(screen.getByText(`history (2)`)).toBeInTheDocument();
     expect(screen.getByText(`english (2)`)).toBeInTheDocument();
     expect(screen.getByText(`french (3)`)).toBeInTheDocument();
@@ -17,12 +16,11 @@ describe('App', () => {
   });
 });
 
-describe('Filtering', () => {
-  it('filters correctly based on single tag', () => {
+describe('2.', () => {
+  it('1.', () => {
     render(<App />);
-    fireEvent.click(screen.getByText(`history (2)`)); // Click to select the tag
+    fireEvent.click(screen.getByText(`history (2)`));
 
-    // Articles
     expect(
       screen.getByText('His mother had always taught him')
     ).toBeInTheDocument();
@@ -34,12 +32,11 @@ describe('Filtering', () => {
     ).not.toBeInTheDocument();
   });
 
-  it('filters correctly based on multiple tags', () => {
+  it('2.', () => {
     render(<App />);
-    fireEvent.click(screen.getByText(`french (3)`)); // Click to select the tag
-    fireEvent.click(screen.getByText(`love (1)`)); // Click to select the tag
+    fireEvent.click(screen.getByText(`french (3)`));
+    fireEvent.click(screen.getByText(`love (1)`));
 
-    // Articles
     expect(
       screen.getByText('Hopes and dreams were dashed that day.')
     ).toBeInTheDocument();
@@ -50,9 +47,8 @@ describe('Filtering', () => {
       screen.queryByText('He was an expert but not in a discipline')
     ).not.toBeInTheDocument();
 
-    fireEvent.click(screen.getByText(`love (1)`)); // Click to deselect the tag
+    fireEvent.click(screen.getByText(`love (1)`));
 
-    // Articles
     expect(
       screen.getByText('Hopes and dreams were dashed that day.')
     ).toBeInTheDocument();
@@ -65,8 +61,8 @@ describe('Filtering', () => {
   });
 });
 
-describe('Removing tag from the article', () => {
-  it('disables last tag from being removed and updates the count', () => {
+describe('3.', () => {
+  it('1.', () => {
     render(<App />);
 
     expect(screen.getByText(`history (2)`)).toBeInTheDocument();
@@ -74,11 +70,8 @@ describe('Removing tag from the article', () => {
     const tagToRemove = `history \u2A09`;
     const remainingTag = `english \u2A09`;
 
-    // Click the first React tag
     fireEvent.click(screen.getAllByText(tagToRemove)[0].closest('button'));
 
-    // Removing the last tag i.e., JavaScript on the first article
-    // should not be possible and thus it should be disabled
     expect(
       screen.getAllByText(remainingTag)[0].closest('button')
     ).toBeDisabled();

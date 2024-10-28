@@ -19,12 +19,11 @@ const App = () => {
     { tag: 'love', count: 1 },
   ];
 
-  // TODO: Maintain a list of selected tags
-  const handleTagClick = (tag) => {};
+  // TODO: Implement this
+  const handleTagClick = () => {};
 
-  // TODO: Update the articles state
-  // to reflect the removed tag from the article
-  const handleTagRemove = (articleId, tag) => {};
+  // TODO: Implement this
+  const handleTagRemove = () => {};
 
   const filteredArticles = articles;
 
@@ -34,14 +33,17 @@ const App = () => {
         <span className="uppercase tracking-wide text-md text-indigo-500 font-semibold">
           Tags
         </span>
-        <TagsList tags={uniqueTags} />
+        <TagsList tags={uniqueTags} onTagClick={handleTagClick} />
       </header>
 
       <main className="flex flex-col gap-2">
         <span className="uppercase tracking-wide text-md text-indigo-500 font-semibold">
           Articles
         </span>
-        <ArticlesList articles={filteredArticles} />
+        <ArticlesList
+          articles={filteredArticles}
+          onTagRemove={handleTagRemove}
+        />
       </main>
     </div>
   );
