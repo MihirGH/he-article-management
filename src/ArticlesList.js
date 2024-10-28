@@ -2,18 +2,24 @@ import { TagButton } from './TagButton';
 
 export const ArticlesList = ({ articles }) => {
   return (
-    <div className="flex flex-col gap-3">
+    <div className="flex flex-col gap-4">
       {articles.map((article) => (
         <div key={article.id}>
-          <h3 className="text-xl">{article.title}</h3>
-          <div className="flex items-center gap-1">
-            <strong>Tags: </strong>
-            <div className="flex flex-wrap gap-2">
-              {article.tags.map((tag) => (
-                <TagButton key={tag}>
-                  {tag} {'\u2A09'}
-                </TagButton>
-              ))}
+          <div className="flex flex-col gap-3 border rounded-md p-4 shadow-md">
+            <span className="tracking-wide font-semibold text-md">
+              {article.title}
+            </span>
+            <div className="flex items-center gap-1 font-light">
+              <span className="uppercase tracking-wide text-sm text-indigo-500 font-semibold">
+                Tags:
+              </span>
+              <div className="flex flex-wrap gap-2">
+                {article.tags.map((tag) => (
+                  <TagButton key={tag}>
+                    {tag} {'\u2A09'}
+                  </TagButton>
+                ))}
+              </div>
             </div>
           </div>
         </div>

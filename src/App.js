@@ -29,16 +29,18 @@ const App = () => {
   const filteredArticles = articles;
 
   return (
-    <div className="flex flex-col gap-5 mx-auto max-w-2xl py-10">
-      <h1 className="text-2xl font-bold">Article Management</h1>
-
+    <div className="flex flex-col gap-5 mx-auto max-w-2xl p-10">
       <header className="flex flex-col gap-2">
-        <h2 className="text-xl font-semibold">Tags</h2>
+        <span className="uppercase tracking-wide text-md text-indigo-500 font-semibold">
+          Tags
+        </span>
         <TagsList tags={uniqueTags} />
       </header>
 
       <main className="flex flex-col gap-2">
-        <h2 className="text-xl font-semibold">Articles</h2>
+        <span className="uppercase tracking-wide text-md text-indigo-500 font-semibold">
+          Articles
+        </span>
         <ArticlesList articles={filteredArticles} />
       </main>
     </div>
